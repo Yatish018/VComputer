@@ -1,7 +1,8 @@
 "use strict";
 const PHONE = "919829017080";
 const ADDR = "Vishwakarma Computers, Opp. SBI Bank, Nagar Nigam Road, Sanganer, Jaipur 302029";
-const $ = (s) => document.querySelector(s);
+// If an element is missing, return a harmless dummy so one mistake can never stop the whole page.
+const $ = (s) => document.querySelector(s) || document.createElement("i");
 const wa = (t) => `https://wa.me/${PHONE}?text=${encodeURIComponent(t)}`;
 let lang = "en";
 try { lang = localStorage.getItem("lang") || "en"; } catch (e) {}
@@ -285,7 +286,7 @@ function renderSwatches() {
 }
 $("#swatches").addEventListener("click", (e) => { const b = e.target.closest(".sw"); if (b) { pal = b.dataset.pal; store("pal", pal); applyTheme(); } });
 document.querySelector(".modes").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) { mode = b.dataset.mode; store("mode", mode); applyTheme(); } });
-darkMQ.addEventListener("change", applyTheme);
+darkMQ.addEventListener ? darkMQ.addEventListener("change", applyTheme) : darkMQ.addListener(applyTheme); // old-browser safe
 const pop = $("#theme-pop"), themeBtn = $("#theme-btn");
 const setPop = (open) => { pop.hidden = !open; themeBtn.setAttribute("aria-expanded", open); };
 themeBtn.addEventListener("click", (e) => { e.stopPropagation(); setPop(pop.hidden); });
@@ -304,6 +305,8 @@ addEventListener("scroll", () => {
 }, { passive: true });
 
 // ---------- Motion: reveal, active menu link, rotating deed names, seal tilt ----------
+// Old browsers without IntersectionObserver: skip scroll animations and show everything.
+if (!("IntersectionObserver" in window)) { document.documentElement.classList.remove("js"); window.IntersectionObserver = class { observe() {} unobserve() {} }; }
 document.querySelectorAll("main .wrap > *").forEach((el) => el.classList.add("rv"));
 const reveal = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); reveal.unobserve(e.target); } }), { threshold: 0.1 });
 document.querySelectorAll(".rv").forEach((el) => reveal.observe(el));
@@ -348,3 +351,6 @@ probe.src = "logo.png";
 $("#year").textContent = new Date().getFullYear();
 applyLang();
 setInterval(updateStatus, 1000);
+
+// Tell the page in index.html that the script finished without errors.
+window.__ok = 1;
