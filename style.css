@@ -103,7 +103,7 @@ dt{font-weight:600;color:var(--blue);margin-top:14px}dd{margin:0}dd a{color:var(
 @keyframes float{50%{transform:translate(30px,24px) scale(1.12)}}
 .ticker{font:600 1.2rem "Noto Serif Devanagari",serif;color:var(--acc);height:1.9em;margin-top:14px}
 .ticker span{display:inline-block;animation:tick .5s ease}@keyframes tick{from{opacity:0;transform:translateY(10px)}}
-.rv{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}.rv.in{opacity:1;transform:none}
+.js .rv{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}.js .rv.in{opacity:1;transform:none}
 .section h2{position:relative;padding-bottom:10px}.section h2::after{content:"";position:absolute;left:0;bottom:0;width:54px;height:3px;background:var(--acc);border-radius:3px}
 .ledger li{transition:background .2s}.ledger li:hover{background:color-mix(in srgb,var(--p) 8%,var(--card))}.ledger li:hover .ic{animation:wob .5s}
 @keyframes wob{30%{transform:rotate(-12deg) scale(1.2)}70%{transform:rotate(8deg)}}
